@@ -2,6 +2,7 @@ package edu.temple.basicbrowser
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
@@ -29,9 +30,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         goButton.setOnClickListener {
-            val text = urlEditText.text.toString()
-            webView.loadUrl(text)
+            val url = urlEditText.text.toString()
+            webView.loadUrl(validProtocol(url))
         }
 
+    }
+
+    private fun validProtocol (url: String) : String {
+
+        if (url.take(8) != "https://") {
+            Log.d("url", "https://$url")
+            return "https://$url"
+        }
+
+        return url
     }
 }
